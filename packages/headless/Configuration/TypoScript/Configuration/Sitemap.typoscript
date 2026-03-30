@@ -1,0 +1,7 @@
+plugin.tx_seo {
+    view {
+        templateRootPaths {
+            10 = EXT:headless/Resources/Private/Templates/XmlSitemap
+        }
+    }
+}

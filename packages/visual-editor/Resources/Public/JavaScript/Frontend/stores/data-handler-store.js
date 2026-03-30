@@ -1,0 +1,163 @@
+import {getObjectLeafCount} from '@typo3/visual-editor/Shared/get-object-leaf-count';
+
+/**
+ * @method addEventListener(type: 'change', listener: (event: CustomEvent<{data: Object, cmd Object}>) => void): void
+ */
+class DataHandlerStore extends EventTarget {
+
+  #data = {};
+  #initialData = {};
+  #cmdArray = [];
+  #oldDetail = {};
+
+  constructor() {
+    super();
+
+    window.addEventListener('beforeunload', (event) => {
+      if (this.changesCount) {
+        event.preventDefault();
+      }
+    });
+  }
+
+  get data() {
+    return structuredClone(this.#data);
+  }
+
+  get initialData() {
+    return structuredClone(this.#initialData);
+  }
+
+  get cmdArray() {
+    return structuredClone(this.#cmdArray);
+  }
+
+
+  get changesCount() {
+    return getObjectLeafCount(this.data) + this.getCmdChanges();
+  }
+
+  /**
+   * @param {string} table
+   * @param {number} uid
+   * @param {string} field
+   * @param {string} value
+   * @return {void}
+   */
+  setInitialData(table, uid, field, value) {
+    this.#initialData[table] = this.#initialData[table] || {};
+    this.#initialData[table][uid] = this.#initialData[table][uid] || {};
+    this.#initialData[table][uid][field] = value;
+    this.updateAndNotify();
+  }
+
+  /**
+   * @param {string} table
+   * @param {number} uid
+   * @param {string} field
+   * @param {string} value
+   * @return {void}
+   */
+  setData(table, uid, field, value) {
+    this.#data[table] = this.#data[table] || {};
+    this.#data[table][uid] = this.#data[table][uid] || {};
+    this.#data[table][uid][field] = value;
+    this.updateAndNotify();
+  }
+
+  /**
+   * @param {string} table
+   * @param {number} uid
+   * @param {'move'|'copy'|'delete'} action
+   * @param {any} value
+   * @return {void}
+   */
+  addCmd(table, uid, action, value) {
+    this.#cmdArray.push({
+      [table]: {
+        [uid]: {
+          [action]: value,
+        },
+      },
+    });
+    this.updateAndNotify();
+  }
+
+  markSaved() {
+    // deep merge data into initialData:
+    for (const table in this.#data) {
+      for (const uid in this.#data[table]) {
+        for (const fieldName in this.#data[table][uid]) {
+          this.#initialData[table][uid][fieldName] = this.#data[table][uid][fieldName];
+        }
+      }
+    }
+
+    this.#data = {};
+    this.#cmdArray = [];
+    this.updateAndNotify();
+    // send change event as updateAndNotify skips it when there are "no changes"
+    this.dispatchEvent(new CustomEvent('change'));
+  }
+
+  updateAndNotify() {
+    // remove everything from #data that is equal to initialData
+    this.#removeStaleData();
+
+    const detail = {data: this.data, cmd: this.cmdArray};
+
+    const oldDetail = this.#oldDetail;
+    this.#oldDetail = detail;
+    if (JSON.stringify(oldDetail) === JSON.stringify(detail)) {
+      return;
+    }
+    this.dispatchEvent(new CustomEvent('change'));
+  }
+
+  #removeStaleData() {
+    for (const table in this.#data) {
+      for (const uid in this.#data[table]) {
+        for (const fieldName in this.#data[table][uid]) {
+          if (this.#initialData[table] &&
+            this.#initialData[table][uid] &&
+            this.#initialData[table][uid][fieldName] === this.#data[table][uid][fieldName]) {
+            delete this.#data[table][uid][fieldName];
+          }
+        }
+        if (Object.keys(this.#data[table][uid]).length === 0) {
+          delete this.#data[table][uid];
+        }
+      }
+      if (Object.keys(this.#data[table]).length === 0) {
+        delete this.#data[table];
+      }
+    }
+  }
+
+  /**
+   * @param {string} table
+   * @param {number} uid
+   * @param {string} field
+   * @return {boolean}
+   */
+  hasChangedData(table, uid, field) {
+    return !!(this.#data[table] !== undefined && this.#data[table][uid] !== undefined && this.#data[table][uid][field] !== undefined);
+  }
+
+  getCmdChanges() {
+    return this.#cmdArray.length;
+  }
+
+  /**
+   * @param {string} table
+   * @return {boolean}
+   */
+  hasChangesIn(table) {
+    if(this.#data[table] !== undefined){
+      return true;
+    }
+    return this.#cmdArray.findIndex((cmd) => cmd[table] !== undefined) !== -1;
+  }
+}
+
+export const dataHandlerStore = new DataHandlerStore;

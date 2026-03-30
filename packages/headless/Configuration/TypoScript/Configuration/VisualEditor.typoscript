@@ -1,0 +1,29 @@
+lib.visualEditorPage = JSON
+lib.visualEditorPage {
+    dataProcessing {
+        10 = FriendsOfTYPO3\Headless\DataProcessing\VisualEditingPageInformationProcessor
+        10 {
+            as = visualEditor
+        }
+    }
+}
+
+lib.visualEditorRecord = JSON
+lib.visualEditorRecord {
+    dataProcessing {
+        10 = FriendsOfTYPO3\Headless\DataProcessing\VisualEditingRecordInformationProcessor
+        10 {
+            as = visualEditor
+        }
+    }
+}
+
+lib.visualEditorResources = JSON
+lib.visualEditorResources {
+    dataProcessing {
+        10 = FriendsOfTYPO3\Headless\DataProcessing\VisualEditingResourcesProcessor
+        10 {
+            as = visualEditor
+        }
+    }
+}

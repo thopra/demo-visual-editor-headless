@@ -1,0 +1,5 @@
+[backend.user.isLoggedIn]
+    page.10.fields.visualEditor < lib.visualEditorPage
+    initialData.10.fields.visualEditor < lib.visualEditorResources
+    lib.contentElement.fields.visualEditor < lib.visualEditorRecord
+[END]

@@ -1,0 +1,10 @@
+includes:
+  - phpstan-baseline.neon
+  - vendor/andersundsehr/phpstan-git-files/extension.php
+
+parameters:
+  level: 8
+  reportUnmatchedIgnoredErrors: false
+  typo3:
+    requestGetAttributeMapping:
+      pageContext: TYPO3\CMS\Backend\Context\PageContext|null

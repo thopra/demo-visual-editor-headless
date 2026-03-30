@@ -1,0 +1,15 @@
+base: 'https://cms.typo3.ddev.site/'
+dependencies:
+  - typo3/theme-camino
+errorHandling: {  }
+languages:
+  -
+    title: English
+    enabled: true
+    languageId: 0
+    base: /
+    locale: en_US.UTF-8
+    navigationTitle: English
+    flag: us
+rootPageId: 2
+routes: {  }

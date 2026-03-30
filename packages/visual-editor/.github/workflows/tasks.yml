@@ -1,0 +1,81 @@
+name: Tasks
+
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+  schedule:
+    - cron: "0 2 * * 1-5"
+
+jobs:
+  lint-php:
+    name: "php: ${{ matrix.php }} TYPO3: ${{ matrix.typo3 }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ '8.2', '8.3', '8.4', '8.5' ]
+        typo3: [ '13', '14' ]
+    steps:
+      - name: Setup PHP with PECL extension
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+      - uses: actions/checkout@v6
+      - run: composer update --with typo3/cms-core:^${{ matrix.typo3 }}
+      - run: ./vendor/bin/grumphp run --ansi
+
+  ter-release:
+    name: Publish new version to TER
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [ lint-php ]
+    env:
+      TYPO3_API_TOKEN: ${{ secrets.TYPO3_API_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: Get the version
+        id: get-version
+        run: echo "version=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: intl, mbstring, xml, soap, zip, curl
+
+      - name: Get comment
+        id: get-comment
+        run: |
+          curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/FriendsOfTYPO3/visual_editor/releases/tags/${{ env.version }} > release.json
+
+          readonly local comment=$(
+            jq -r '.name, "", .body, "", .html_url' release.json \
+            | php -r 'echo preg_replace("/[\x{1F1E6}-\x{1F1FF}\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}\x{FE0F}\x{200D}]/u", "", stream_get_contents(STDIN));' \
+          )
+
+          {
+            echo 'comment<<EOF'
+            echo "$comment"
+            echo EOF
+          } >> "$GITHUB_ENV"
+
+      - name: Install typo3/tailor
+        run: composer global require typo3/tailor --prefer-dist --no-progress
+
+      - name: Upload EXT:visual_editor to TER
+        run: |
+          sed -i "s|'dev-'|'${{ env.version }}'|g" ext_emconf.php \
+          && git config --global user.email "no@one" \
+          && git config --global user.name "No One" \
+          && git add ext_emconf.php \
+          && git commit -m 'x' -n \
+          && git archive -o archive.zip HEAD --prefix=visual_editor-${{ env.version }}/ \
+          && git reset --hard HEAD~ \
+          && php ~/.composer/vendor/bin/tailor ter:publish -vvv ${{ env.version }} --artefact=archive.zip --comment="${{ env.comment }}"

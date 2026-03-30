@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+  TYPO3\CMS\VisualEditor\:
+    resource: '../Classes/*'
+
+  TYPO3\CMS\VisualEditor\Form\Field:
+    public: true
+
+  TYPO3\CMS\VisualEditor\Service\EditModeService:
+    public: true
+
+  TYPO3\CMS\Backend\Template\Components\Buttons\LanguageSelectorBuilder:
+    public: true

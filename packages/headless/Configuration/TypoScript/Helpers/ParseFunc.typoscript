@@ -1,0 +1,35 @@
+# Creates persistent ParseFunc setup for non-HTML content.
+lib {
+    parseFunc_links {
+        htmlSanitize = 1
+        tags {
+            link = TEXT
+            link {
+                current = 1
+                typolink {
+                    parameter.data = parameters : allParams
+                    extTarget.data = parameters:target
+                }
+
+                parseFunc.constants = 1
+            }
+
+            a = TEXT
+            a {
+                current = 1
+                typolink {
+                    parameter.data = parameters:href
+                    title.data = parameters:title
+                    ATagParams.data = parameters:allParams
+                    target.data = parameters:target
+                    extTarget.data = parameters:target
+                }
+            }
+        }
+    }
+}
+
+
+
+
+

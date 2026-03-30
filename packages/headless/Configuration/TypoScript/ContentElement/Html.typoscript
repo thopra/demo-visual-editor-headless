@@ -1,0 +1,18 @@
+tt_content.html =< lib.contentElement
+tt_content.html {
+    dataProcessing >
+    fields {
+        content {
+            fields {
+                header = TEXT
+                header {
+                    field = header
+                }
+                bodytext = TEXT
+                bodytext {
+                    field = bodytext
+                }
+            }
+        }
+    }
+}

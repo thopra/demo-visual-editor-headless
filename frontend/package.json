@@ -1,0 +1,20 @@
+{
+  "name": "headless-ve",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@t3headless/nuxt-typo3": "latest",
+    "nuxt": "latest",
+    "nuxt-security": "^2.5.1",
+    "typescript": "latest",
+    "vue": "latest",
+    "vue-router": "latest"
+  }
+}

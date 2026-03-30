@@ -1,0 +1,52 @@
+/**
+ * Custom styles for CKEditor to make it blend with the surrounding content.
+ * TODO move this into the <ve-editable-rich-text> !!!
+ */
+.ck-content.ck-content.ck-content {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 4px !important;
+  padding: 4px !important;
+  margin: -4px !important;
+}
+
+/**
+  * Highlight the editable area on hover and focus:
+ */
+.ck-content:hover, .ck-content:focus {
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.50) inset !important;
+  backdrop-filter: blur(10px) invert(20%) !important;
+  outline: 0.25rem solid #5432fe !important;
+}
+
+ve-editable-rich-text[changed] .ck-content {
+  backdrop-filter: blur(10px) hue-rotate(120deg) invert(30%) !important;
+}
+
+/**
+  * (for now): Simulate InlineEditor of CKEditor
+ */
+.ck-editor__top {
+  display: none;
+  position: absolute !important;
+  bottom: 100%; /* position it over the element */
+  left: 0;
+  right: 0;
+
+  z-index: 20000;
+
+  &:has(+ * > .ck-focused) {
+    display: block;
+  }
+}
+
+.ck-content {
+  /*color: var(--ck-content-font-color); !* TODO fix this if color is white we want to use white *!*/
+}
+
+
+#typo3-preview-info {
+  /*  hide the preview info box, as it is not relevant for the editor and only distracts from the content */
+  display: none;
+}

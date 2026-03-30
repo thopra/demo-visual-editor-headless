@@ -1,0 +1,70 @@
+{
+  "name": "friendsoftypo3/visual-editor",
+  "description": "TYPO3 CMS Visual Editor - brings a modern WYSIWYG editing experience to TYPO3 CMS.",
+  "license": [
+    "GPL-2.0-or-later"
+  ],
+  "type": "typo3-cms-extension",
+  "keywords": [
+    "typo3 cms",
+    "typo3",
+    "cms",
+    "core",
+    "extension",
+    "visual",
+    "editor",
+    "visual editor",
+    "wysiwyg"
+  ],
+  "require": {
+    "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+    "typo3/cms-backend": "^13.4.22 || ^14.2.0 || 14.2.x-dev",
+    "typo3/cms-core": "^13.4.22 || ^14.2.0 || 14.2.x-dev",
+    "typo3/cms-extbase": "^13.4.22 || ^14.2.0 || 14.2.x-dev",
+    "typo3/cms-fluid": "^13.4.22 || ^14.2.0 || 14.2.x-dev",
+    "typo3/cms-frontend": "^13.4.22 || ^14.2.0 || 14.2.x-dev",
+    "typo3/cms-rte-ckeditor": "^13.4.22 || ^14.2.0 || 14.2.x-dev"
+  },
+  "require-dev": {
+    "b13/container": "^3.2.3",
+    "pluswerk/grumphp-config": "^10.2.6",
+    "saschaegerer/phpstan-typo3": "^2.1.1 || ^3.0.1",
+    "ssch/typo3-rector": "^3.13.0",
+    "typo3fluid/fluid": "^4.6.0 || 4.6.x-dev || ^5"
+  },
+  "suggest": {
+    "wapplersystems/multisite-belogin": "You should install this extension, if you have multiple domains in your TYPO3 installation."
+  },
+  "autoload": {
+    "psr-4": {
+      "TYPO3\\CMS\\VisualEditor\\": "Classes/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "ergebnis/composer-normalize": true,
+      "phpro/grumphp": true,
+      "phpstan/extension-installer": true,
+      "pluswerk/grumphp-config": true,
+      "typo3/class-alias-loader": true,
+      "typo3/cms-composer-installers": true
+    }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "visual_editor"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "@composer normalize"
+    ],
+    "post-update-cmd": [
+      "@composer bump --dev-only",
+      "@composer normalize"
+    ],
+    "post-autoload-dump": [
+      "sh -c 'MAJOR=$(typo3 --version | awk '\\''{split($3, v, \".\"); print v[1]}'\\''); ln -sfn \"phpstan-baseline-${MAJOR}.neon\" phpstan-baseline.neon'"
+    ]
+  }
+}

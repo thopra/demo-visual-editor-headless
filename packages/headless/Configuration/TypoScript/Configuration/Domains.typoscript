@@ -1,0 +1,14 @@
+headless_domains < lib.headlessPage
+headless_domains {
+    typeNum = 835
+
+    10 {
+        dataProcessing {
+            10 = FriendsOfTYPO3\Headless\DataProcessing\RootSitesProcessor
+            10 {
+                as = sites
+                siteSchema = FriendsOfTYPO3\Headless\DataProcessing\RootSiteProcessing\DomainSchema
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+tt_content.menu_abstract =< lib.contentElementWithHeader
+tt_content.menu_abstract {
+    dataProcessing >
+    fields {
+        content {
+            fields {
+                menu = TEXT
+                menu {
+                    dataProcessing {
+                        10 = FriendsOfTYPO3\Headless\DataProcessing\MenuProcessor
+                        10 {
+                            appendData = 1
+                            special = directory
+                            special.value.field = pages
+                            additionalFields = abstract
+                            as = menu
+                            dataProcessing {
+                                10 = FriendsOfTYPO3\Headless\DataProcessing\FilesProcessor
+                                10 {
+                                    references.fieldName = media
+                                    as = media
+                                    appendData = 1
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
