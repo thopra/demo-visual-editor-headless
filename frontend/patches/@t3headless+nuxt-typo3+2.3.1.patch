@@ -1,0 +1,19 @@
+diff --git a/node_modules/@t3headless/nuxt-typo3/dist/runtime/lib/apiClient.js b/node_modules/@t3headless/nuxt-typo3/dist/runtime/lib/apiClient.js
+index 42042e7..598be44 100644
+--- a/node_modules/@t3headless/nuxt-typo3/dist/runtime/lib/apiClient.js
++++ b/node_modules/@t3headless/nuxt-typo3/dist/runtime/lib/apiClient.js
+@@ -1,3 +1,4 @@
++import { useRequestFetch } from "#app"
+ import { $fetch } from "ofetch";
+ import { cleanDoubleSlashes, parseQuery, parseURL } from "ufo";
+ import { defu } from "defu";
+@@ -17,7 +18,8 @@ export class T3ApiClient {
+       credentials: this.siteOptions.api.credentials,
+       retry: false
+     };
+-    this._$fetch = $fetch.create(this.fetchOptions);
++    //this._$fetch = $fetch.create(this.fetchOptions);
++    this._$fetch = useRequestFetch();
+   }
+   apiHeaders;
+   siteOptions;

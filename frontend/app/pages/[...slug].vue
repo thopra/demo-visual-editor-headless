@@ -12,8 +12,10 @@ const { headData, pageData, backendLayout } = await useT3Page();
 useHead(headData);
 
 onMounted(() => {
+  if (!pageData.value?.visualEditor) {
+    return;
+  }
   window.TYPO3 = window.TYPO3 || {};
   window.veInfo = JSON.parse(JSON.stringify(pageData.value.visualEditor));
-  console.log([window.veInfo, 'vue'] );
 });
 </script>

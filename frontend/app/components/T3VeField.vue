@@ -6,7 +6,7 @@
       :field="field.field"
       :name="field.name"
       :title="field.title"
-      :options="JSON.stringify(field.richtextOptions)"
+      :options="field.richtextOptions ? JSON.stringify(field.richtextOptions) : null"
       :key="`ve_${field.id}`"
       v-html="field.value"
   >

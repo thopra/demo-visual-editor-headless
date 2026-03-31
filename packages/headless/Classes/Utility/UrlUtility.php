@@ -106,7 +106,13 @@ class UrlUtility implements LoggerAwareInterface, HeadlessFrontendUrlInterface
                 $targetUri = $targetUri->withHost($frontBase);
                 if ($frontExtraPath) {
                     $targetUri = $targetUri->withPath($this->handleFrontendAndBackendPaths($frontExtraPath, $targetUri, $site->getBase()->getPath()));
+
+                // @todo: this needs to be patched so that it is possible to have typo3 running in a path and the frontend on the root
+                } else {
+                    $targetUri = $targetUri->withPath('/');
                 }
+
+
             }
 
             if ($site->getBase()->getPort() === $frontPort) {

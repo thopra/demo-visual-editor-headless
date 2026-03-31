@@ -111,7 +111,7 @@ return [
             1,
         ],
 
-        // @todo: clarify that cross domains cookies are a prerequisite
-        'cookieDomain' => '.ddev.site'
+        // @todo: document that cross domains cookies are a prerequisite
+        'cookieDomain' => '.typo3.ddev.site'
     ],
 ];

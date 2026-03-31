@@ -1,7 +1,7 @@
-base: 'https://api.typo3.ddev.site/'
+base: 'https://api.typo3.ddev.site/api/'
 dependencies:
   - friendsoftypo3/headless
-frontendBase: 'https://typo3.ddev.site:3000/'
+frontendBase: 'https://api.typo3.ddev.site/'
 headless: 1
 languages:
   -

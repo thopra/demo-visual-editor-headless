@@ -23,7 +23,7 @@ const props = defineProps<{
 }>();
 
 const {pageData} = await useT3Page();
-const pageUid = computed(() => pageData.value.visualEditor.pageUid);
+const pageUid = computed(() => pageData.value?.visualEditor?.pageUid);
 const columnName = computed(() => 'TODO: column name');
 const contentToRender = computed(() => props.content !== undefined ? props.content : (pageData.value.content['colPos' + props.colPos || []]));
 </script>

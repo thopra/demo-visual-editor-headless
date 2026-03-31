@@ -7,7 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "patch-package && nuxt prepare"
   },
   "devDependencies": {
     "@t3headless/nuxt-typo3": "latest",
@@ -16,5 +16,8 @@
     "typescript": "latest",
     "vue": "latest",
     "vue-router": "latest"
+  },
+  "dependencies": {
+    "patch-package": "^8.0.1"
   }
 }

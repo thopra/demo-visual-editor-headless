@@ -212,7 +212,7 @@ final class PageEditController
 
         $uri = $this->site->getRouter()->generateUri($this->pageRecord->getUid(), $parameters);
 
-        if (ExtensionManagementUtility::isLoaded('visual_editor') && ($this->site->getConfiguration()['headless'] ?? 0) > 0) {
+        if (ExtensionManagementUtility::isLoaded('headless') && ($this->site->getConfiguration()['headless'] ?? 0) > 0) {
             $headlessMode = GeneralUtility::makeInstance(HeadlessModeInterface::class);
             $headlessMode = $headlessMode->withRequest($request);
             $request = $headlessMode->overrideBackendRequestBySite($this->site, $siteLanguage);

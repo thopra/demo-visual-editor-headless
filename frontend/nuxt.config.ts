@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // app: {
+  //   baseURL: '/fe/',
+  // },
   ssr: true,
   devtools: { enabled: true },
   modules: ['@t3headless/nuxt-typo3', 'nuxt-security'],
@@ -12,7 +15,7 @@ export default defineNuxtConfig({
   },
   typo3: {
     api: {
-      baseUrl: process.env.API_BASE || 'https://api.typo3.ddev.site',
+      baseUrl: process.env.API_BASE || 'https://api.typo3.ddev.site/api',
       credentials: 'include',
       // headers: {},
       // proxyHeaders: true,
@@ -25,16 +28,21 @@ export default defineNuxtConfig({
     }
   },
   devServer: {
-      origin: ['https://typo3.ddev.site:3000', 'https://typo3.ddev.site', 'https://api.typo3.ddev.site'],
+      origin: ['https://api.typo3.ddev.site:3000', 'https://typo3.ddev.site', 'https://api.typo3.ddev.site'],
   },
   vite: {
     server: {
-      allowedHosts: ['typo3.ddev.site', 'api.typo3.ddev.site'],
-    }
+      allowedHosts: ['typo3.ddev.site', 'api.typo3.ddev.site', 'localhost'],
+      hmr: {
+        protocol: 'wss',
+        clientPort: 443,
+        path: 'hmr/'
+      }
+    },
   },
   security: {
     corsHandler: {
-      origin: ['https://typo3.ddev.site:3000', 'https://typo3.ddev.site', 'https://api.typo3.ddev.site'],
+      origin: ['https://api.typo3.ddev.site:3000', 'https://typo3.ddev.site', 'https://api.typo3.ddev.site'],
       credentials: true
     },
     headers: {
