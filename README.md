@@ -43,7 +43,7 @@ We need some public service class(es) that will provide the following data:
 
 #### 2. Not required, but would be nice: Event / Callback when changes require a reload
 
-If something is changed, it would be nice to have an event being dispatched that we can use to reload the pagedata from the api or react to changes to tha page that require to update state in the frontend
+It would be nice to have an event being dispatched that we can use to reload the pagedata from the api or react to changes to tha page that require to update state in the frontend
 
 #### 3. Proper CORS support or documentation of the limitations
 
