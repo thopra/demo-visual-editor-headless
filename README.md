@@ -55,7 +55,7 @@ While we CAN do this (by reverse-proxying anything other than /typo3 /_assets an
 
 #### 1. Add DataProcessors for editing information
 
-Once visual-editor provides classes to get the editing information for pages and records, headless should optionally include TS configuration and some DataPRocessors to add this data to the JSON page and initialData
+Once visual-editor provides classes to get the editing information for pages and records, headless should optionally include TS configuration and some DataProcessors to add this data to the JSON page and initialData
 
 See:
 
@@ -66,7 +66,11 @@ packages/headless/Classes/DataProcessing/VisualEditingRecordInformationProcessor
 
 This is a big one: All of this can only work, if the JS resources that are loaded from the extension visual_editor are provided to the frontend. Currently, headless has no concept of this because it would usually not be coupled to JS modules from extensions.
 
-While we could just generate a URL to the public assets of a JS file, the problem is that the ES Modules rely on an importmap that is usually rendered in the head of the page by the PageRenderer. Without it, we cannot load any JS modules that have been added via the JavaScriptRenderer und thus this approach will not work.
+While we could just generate a URL to the public assets of a JS file, the problem is that the ES Modules rely on an importmap that is usually rendered in the head of the page by the PageRenderer. 
+
+There is also some inline javascript rendered by the core that adds required properties to the window object, like "settings", if a backend user is authenticated.
+
+Without it, we cannot load any JS modules that have been added via the JavaScriptRenderer und thus this approach will not work.
 
 To work around this, in this demo I have just injected the importmap aswell, but that only works when ssr is enabled. We can't dynamically add an importmap on the client side.
 
