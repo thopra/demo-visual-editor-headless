@@ -12,7 +12,7 @@ https://api.typo3.ddev.site should now show the nuxt frontend (with 3 unstyled c
 
 ## Proof-of-Concept
 
-This repository is only intended to evaluate what's currently possible and where the limitations would be. Hence, most changes to packages are just quick prototyping to work out if there are any dead ends. Proper implementation would needs some more work.
+This repository is only intended to evaluate what's currently possible and where the limitations would be. Hence, most changes to packages are just quick prototyping to work out if there are any dead ends. Proper implementation would need some more work.
 
 ## What's working (kind of, with some changes)
 
