@@ -27,6 +27,273 @@ This repository is only intended to evaluate what's currently possible and where
 3. Navigating to other pages than the root page in the page tree will fail because cHash validation fails. Don't know why, yet.
 4. Only works when SSR is enabled. This is because the JS modules that need to be injected to the frontend rely on an importmap that is usually created in the PageRenderer. Worked around this by providing the whole importmap as a stringified JSON in the headless initialData response and inject it during SSR. This is *not* a viable solution. 
 
+
+## Example Output for headless page when in editing mode
+
+``` 
+{
+  "id": 1,
+  "type": "Standard",
+  "slug": "/",
+  
+  ...
+  
+  "visualEditor": {
+    "pageId": 1,
+    "languageId": 0,
+    "backendEditUrl": "/typo3/module/web/edit?token=dddbdb5df848fb8bcae70b2d2f5740c76fe8d506dbbdb9ad91b9e9b2470bfa45&id=1&languages%5B0%5D=0",
+    "newContentUrl": "/typo3/record/content/wizard/new?token=d64ca4b8aaa4eaf95df6798b991366fbf62c9784e79c590c8dd7c351e82c3e65&id=1&colPos=__COL_POS__&uid_pid=__UID_PID__&returnUrl=/typo3/module/web/edit?token%3Ddddbdb5df848fb8bcae70b2d2f5740c76fe8d506dbbdb9ad91b9e9b2470bfa45%26id%3D1%26languages%255B0%255D%3D0",
+    "editContentUrl": "/typo3/record/edit?token=41b20abfb4bd33222146910bb6aedca12d81934f88410d13a09349f84f9f0d7a&edit%5B__TABLE__%5D%5B__UID__%5D=edit&returnUrl=/typo3/module/web/edit?token%3Ddddbdb5df848fb8bcae70b2d2f5740c76fe8d506dbbdb9ad91b9e9b2470bfa45%26id%3D1%26languages%255B0%255D%3D0&module=web_edit",
+    "editContentContextualUrl": "/typo3/record/edit/contextual?token=fb1e478f5f5b9557963fd8c7e0b2753eba08e506de3857e45b4bd430b916538d&edit%5B__TABLE__%5D%5B__UID__%5D=edit&returnUrl=/typo3/module/web/edit?token%3Ddddbdb5df848fb8bcae70b2d2f5740c76fe8d506dbbdb9ad91b9e9b2470bfa45%26id%3D1%26languages%255B0%255D%3D0&module=web_edit",
+    "allowNewContent": true,
+    "token": "12825aaaacf0476059e2917a0391f3834e4ebf7337cace45936802a4cbe08a65",
+    "routeArguments": [],
+    "allowedOrigins": [
+      "https://api.typo3.ddev.site"
+    ]
+  },
+  "content": {
+    "colPos0": [
+      {
+        "id": 1,
+        "type": "text",
+        "colPos": 0,
+        "categories": "",
+        "appearance": {
+          "layout": "default",
+          "frameClass": "default",
+          "spaceBefore": "",
+          "spaceAfter": ""
+        },
+        "visualEditor": {
+          "record": {
+            "elementName": "Regular Text Element",
+            "CType": "text",
+            "table": "tt_content",
+            "id": "tt_content:1",
+            "uid": "1",
+            "pid": "1",
+            "colPos": 0,
+            "hiddenFieldName": "hidden",
+            "canModifyRecord": "true",
+            "canBeMoved": "true"
+          },
+          "fields": [
+            {
+              "table": "tt_content",
+              "name": "Page Content: Header",
+              "field": "header",
+              "title": "edit Page Content: Header",
+              "allowNewlines": false,
+              "value": "Welcome to your default website",
+              "richtext": false,
+              "richtextOptions": null,
+              "uid": 1,
+              "id": "tt_content:1"
+            },
+            {
+              "table": "tt_content",
+              "name": "Page Content: Subheader",
+              "field": "subheader",
+              "title": "edit Page Content: Subheader",
+              "allowNewlines": false,
+              "value": "",
+              "richtext": false,
+              "richtextOptions": null,
+              "uid": 1,
+              "id": "tt_content:1"
+            },
+            {
+              "table": "tt_content",
+              "name": "Page Content: Text",
+              "field": "bodytext",
+              "title": "edit Page Content: Text",
+              "allowNewlines": true,
+              "value": "\u003Cp\u003EThis website is made with \u003Ca href=\"https://typo3.org\" target=\"_blank\" rel=\"noreferrer\"\u003ETYPO3\u003C/a\u003E and headless.\u003C/p\u003E\r\n\u003Cp\u003E&nbsp;\u003C/p\u003E",
+              "richtext": true,
+              "richtextOptions": {
+                "customConfig": "",
+                "label": "Text",
+                "alignment": {
+                  "options": [
+                    {
+                      "name": "left",
+                      "className": "text-start"
+                    },
+                    {
+                      "name": "center",
+                      "className": "text-center"
+                    },
+                    {
+                      "name": "right",
+                      "className": "text-end"
+                    },
+                    {
+                      "name": "justify",
+                      "className": "text-justify"
+                    }
+                  ]
+                },
+                "contentsCss": [],
+                "heading": {
+                  "options": [
+                    {
+                      "model": "paragraph",
+                      "title": "Paragraph"
+                    },
+                    {
+                      "model": "heading2",
+                      "view": "h2",
+                      "title": "Heading 2"
+                    },
+                    {
+                      "model": "heading3",
+                      "view": "h3",
+                      "title": "Heading 3"
+                    },
+                    {
+                      "model": "formatted",
+                      "view": "pre",
+                      "title": "Pre-Formatted Text"
+                    }
+                  ]
+                },
+                "importModules": [
+                  {
+                    "module": "@typo3/rte-ckeditor/plugin/whitespace.js",
+                    "exports": [
+                      "Whitespace"
+                    ]
+                  },
+                  {
+                    "module": "@typo3/rte-ckeditor/plugin/typo3-link.js",
+                    "exports": [
+                      "Typo3Link"
+                    ]
+                  }
+                ],
+                "style": {
+                  "definitions": [
+                    {
+                      "name": "Lead",
+                      "element": "p",
+                      "classes": [
+                        "lead"
+                      ]
+                    },
+                    {
+                      "name": "Small",
+                      "element": "small",
+                      "classes": [
+                        ""
+                      ]
+                    },
+                    {
+                      "name": "Muted",
+                      "element": "span",
+                      "classes": [
+                        "text-muted"
+                      ]
+                    }
+                  ]
+                },
+                "table": {
+                  "defaultHeadings": {
+                    "rows": 1
+                  },
+                  "contentToolbar": [
+                    "tableColumn",
+                    "tableRow",
+                    "mergeTableCells",
+                    "tableProperties",
+                    "tableCellProperties",
+                    "toggleTableCaption"
+                  ]
+                },
+                "toolbar": {
+                  "items": [
+                    "style",
+                    "heading",
+                    "|",
+                    "bold",
+                    "italic",
+                    "subscript",
+                    "superscript",
+                    "softhyphen",
+                    "|",
+                    "bulletedList",
+                    "numberedList",
+                    "blockQuote",
+                    "alignment",
+                    "|",
+                    "findAndReplace",
+                    "link",
+                    "|",
+                    "removeFormat",
+                    "undo",
+                    "redo",
+                    "|",
+                    "insertTable",
+                    "|",
+                    "specialCharacters",
+                    "horizontalLine",
+                    "sourceEditing"
+                  ],
+                  "removeItems": [],
+                  "shouldNotGroupWhenFull": true
+                },
+                "ui": {
+                  "poweredBy": {
+                    "position": "inside",
+                    "side": "right",
+                    "label": ""
+                  }
+                },
+                "width": "auto",
+                "wordCount": {
+                  "displayCharacters": true,
+                  "displayWords": true
+                },
+                "language": {
+                  "ui": "en",
+                  "content": "en-us"
+                },
+                "debug": false,
+                "typo3link": {
+                  "route": "rteckeditor_wizard_browse_links",
+                  "routeUrl": "/typo3/rte/wizard/browselinks?token=9df230475fabb850e2619510b86b807155c599a64be1bd81a02748738c861048&P%5Btable%5D=tt_content&P%5Buid%5D=1&P%5BfieldName%5D=bodytext&P%5BrecordType%5D=text&P%5Bpid%5D=1&P%5BrichtextConfigurationName%5D=default"
+                }
+              },
+              "uid": 1,
+              "id": "tt_content:1"
+            },
+            {
+              "table": "tt_content",
+              "name": "Page Content: Link label",
+              "field": "tx_themecamino_link_label",
+              "title": "edit Page Content: Link label",
+              "allowNewlines": false,
+              "value": "",
+              "richtext": false,
+              "richtextOptions": null,
+              "uid": 1,
+              "id": "tt_content:1"
+            }
+          ]
+        },
+        "content": {
+          "header": "Welcome to your default website",
+          "subheader": "",
+          "headerLayout": 0,
+          "headerPosition": "",
+          "headerLink": "",
+          "bodytext": "\u003Cp\u003EThis website is made with \u003Ca href=\"https://typo3.org\" target=\"_blank\" rel=\"noreferrer\"\u003ETYPO3\u003C/a\u003E and headless.\u003C/p\u003E\n\u003Cp\u003E&nbsp;\u003C/p\u003E"
+        }
+      },
+  ...
+}
+```
+
 ## Necessary changes
 
 The following problems/additions need to be addressed in each package:
