@@ -12,12 +12,12 @@ https://api.typo3.ddev.site should now show the nuxt frontend (with 3 unstyled c
 
 ## Proof-of-Concept
 
-This repository is only intended to evaluate what's currently possible and where the limitations would be. Hence, most changes to packages are just quick fixes to get to the next problem until hitting a wall that cannot be overcome without changes in the TYPO3 core and will need a lot more work.
+This repository is only intended to evaluate what's currently possible and where the limitations would be. Hence, most changes to packages are just quick prototyping to work out if there are any dead ends. Proper implementation would needs some more work.
 
 ## What's working (kind of, with some changes)
 
 1. Backend module shows headless site's frontendBase
-2. Information about visual editing (record information, edit urls etc.) are included in headless JSON response when backend user is authenticated
+2. Information about visual editing (record information, edit urls etc.) is included in headless JSON response when backend user is authenticated
 3. nuxt app renders custom elements for editing (see example components in /frontend/)
 
 ## What isn't ...
@@ -349,7 +349,7 @@ packages/headless/Classes/DataProcessing/VisualEditingResourcesInformationProces
 
 #### 1. Pass cookies to api during SSR
 
-Not sure if this is related to visual editing or a CORS problem in general. Faced an issue that cookies where not included in the api request during SSR.
+Not sure if this is related to visual editing or a CORS problem in general. Faced an issue where cookies where not included in the api request during SSR.
 
 The editing information should only be included for authenticated backend users, so without an established session it will not be rendered.
 
